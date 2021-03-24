@@ -48,16 +48,13 @@ class Shape {
     }
 
     getSizeCoefficient() {
-        return 1/( this.sides/2*Math.cos( this.getRadOf( (180-(180/this.sides*(this.sides-2)))/2 ) ) )/0.7071067811865475*(this.sides==3?0.7071067811865475:1);
+        return 1/( this.sides/2*Math.cos( this.getRadOf( (180-(180/this.sides*(this.sides-2)))/2 ) ) )/0.7071067811865475*(this.sides===3?0.7071067811865475:1);
     }
 
     getDistenceToCenter() {
         const tempLength = Math.csc(Math.PI * 2 / this.sides) * this.getSizeCoefficient() * -0.5;
 
-        return {
-            x: tempLength * this.getSize().x,
-            y: tempLength * this.getSize().y
-        };
+        return {x: tempLength * this.getSize().x, y: tempLength * this.getSize().y};
     }
 
     getSize() {
@@ -80,6 +77,6 @@ class Shape {
     }
 
     getRadOf(deg) {
-        return this.degType == "rad" ? deg : Math.rad(deg);
+        return this.degType === "rad" ? deg : Math.rad(deg);
     }
 }

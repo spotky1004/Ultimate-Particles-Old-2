@@ -1,44 +1,45 @@
 body {
   margin: 0;
   padding: 0;
-    user-select: none;
-    overflow: hidden;
-    font-family: "Major Mono Display", monospace;
-    background-color: #000;
+  user-select: none;
+  overflow: hidden;
+  font-family: "Major Mono Display", monospace;
+  background-color: #000;
 }
 
 #gameScreenWarp {
-    background-color: #191919;
-    transition: background-color 0.2s;
+  background-color: #191919;
+  transition: background-color 0.2s;
 }
 
 #gameScreenWarp,
 #otherWarp {
-    position: relative;
-    top: 0; left: 0;
-    height: 100vh;
+  position: relative;
+  top: 0; left: 0;
+  height: 100vh;
 }
 
 #gameScreenWarp > *,
 #otherWarp > * {
-    position: absolute;
+  position: absolute;
 }
 
 #canvasFrame {
-    --baseSize: min(100vw, 100vh);
-    --sizeMultiply: 1;
-    --inOutRatio: 0.96;
+  --baseSize: min(100vw, 100vh);
+  --sizeMultiply: 1;
+  --inOutRatio: 0.96;  
 
-    --innerSize: calc(var(--baseSize) * var(--sizeMultiply) * var(--inOutRatio));
-    width: var(--innerSize); height: var(--innerSize);
+  --innerSize: calc(var(--baseSize) * var(--sizeMultiply) * var(--inOutRatio));
+  width: var(--innerSize); height: var(--innerSize);  
 
-    --outerSize: calc(var(--baseSize) * var(--sizeMultiply) * calc(1 - var(--inOutRatio)) / 2);
-    padding: var(--outerSize);
+  --outerSize: calc(var(--baseSize) * var(--sizeMultiply) * calc(1 - var(--inOutRatio)) / 2);
+  padding: var(--outerSize);  
 
-    --boardColor: #666;
-    background-color: var(--boardColor);
-    box-shadow:
-    0 0 calc(var(--baseSize) / 100) var(--boardColor),
-    0 0 calc(var(--baseSize) / 60) var(--boardColor),
-    0 0 calc(var(--baseSize) / 20) var(--boardColor);
+  --boardColor: #666;
+  background-color: var(--boardColor);
+  
+  box-shadow:
+  0 0 calc(var(--baseSize) / 100) var(--boardColor),
+  0 0 calc(var(--baseSize) / 60) var(--boardColor),
+  0 0 calc(var(--baseSize) / 20) var(--boardColor);
 }
