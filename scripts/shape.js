@@ -10,7 +10,7 @@ class Shape {
         this.degType = attrs.degType ?? "deg"; // type of deg input; String: "rad" or "deg"
 
         // property fix
-        if (typeof this.size === "number") this.size = {x: this.size, y: this.size};
+        if (typeof this.size === "number") { this.size = {x: this.size, y: this.size} };
     }
 
     size = {x: 0.02, y: 0.02};
@@ -29,9 +29,9 @@ class Shape {
         * "Qn": retrun point of the quadrant; eg) "Q1" -> top-right, "Q2" -> top-left...
         */
 
-        if (position === "center") return {...this.position};
-        if (position === "firstPoint") return this.getDistenceToCenter();
-        if (position.startsWith("Q")) return 0;
+        if (position === "center") { return {...this.position} };
+        if (position === "firstPoint") { return this.getDistenceToCenter() };
+        if (position.startsWith("Q")) { return 0 };
     }
 
     getPoints(getFor=this.sides) {

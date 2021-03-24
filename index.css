@@ -15,7 +15,8 @@ body {
 #gameScreenWarp,
 #otherWarp {
   position: relative;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   height: 100vh;
 }
 
@@ -28,18 +29,14 @@ body {
   --baseSize: min(100vw, 100vh);
   --sizeMultiply: 1;
   --inOutRatio: 0.96;  
-
   --innerSize: calc(var(--baseSize) * var(--sizeMultiply) * var(--inOutRatio));
-  width: var(--innerSize); height: var(--innerSize);  
-
   --outerSize: calc(var(--baseSize) * var(--sizeMultiply) * calc(1 - var(--inOutRatio)) / 2);
-  padding: var(--outerSize);  
-
   --boardColor: #666;
+  width: var(--innerSize);
+  height: var(--innerSize); 
+  padding: var(--outerSize);
   background-color: var(--boardColor);
-  
-  box-shadow:
-  0 0 calc(var(--baseSize) / 100) var(--boardColor),
-  0 0 calc(var(--baseSize) / 60) var(--boardColor),
-  0 0 calc(var(--baseSize) / 20) var(--boardColor);
+  box-shadow: 0 0 calc(var(--baseSize) / 100) var(--boardColor),
+    0 0 calc(var(--baseSize) / 60) var(--boardColor),
+    0 0 calc(var(--baseSize) / 20) var(--boardColor);
 }
