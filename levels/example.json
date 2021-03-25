@@ -1,0 +1,23 @@
+{
+    "actions": {
+        "exampleAction": {
+            "condition": ["phase", "eq", "1"],
+            "deleteIf": ["phase", "gte", "5"]
+        }
+    },
+    "particles": {
+        "player": {"size": 4, "behave": "player", "color": "#000"}
+    },
+    "values": {
+        "levelInfo": "Phase ${this.values.phase}<br>HP ${this.values.playerHp}",
+        "playerHp": 10,
+        "phase": 0,
+        "tickSpent": 0
+    },
+    "config": {
+        "tickSpeed": 15,
+        "phaseLength": 10,
+        "advenced": false,
+        "playerHpType": "Merged"
+    }
+}

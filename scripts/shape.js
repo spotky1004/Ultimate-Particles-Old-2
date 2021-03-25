@@ -9,8 +9,13 @@ class Shape {
         this.rotate = attrs.rotate ?? 0; // rotation deg of Shape; Number
         this.degType = attrs.degType ?? "deg"; // type of deg input; String: "rad" or "deg"
 
+        this.increments = {
+            size: {x: 1},
+            sides: 0.2
+        };
+
         // property fix
-        if (typeof this.size === "number") { this.size = {x: this.size, y: this.size}; };
+        if (typeof this.size === "number") { this.size = {x: this.size, y: this.size}; }
     }
 
     size = {x: 0.02, y: 0.02};
@@ -20,18 +25,37 @@ class Shape {
     rotate = 0;
     degType = "deg";
 
+    update(dt) {
+        const dtc = dt/1000;
+
+        for (const i in this.increments) {
+            const tempVal = this.increments[i];
+
+            switch (typeof tempVal) {
+                case "number":
+                    this[i] += tempVal * dtc;
+                    break;
+                case "object":
+                    for (const j in tempVal) {
+                        this[i][j] += tempVal[j] * dtc;
+                    }
+                    break;
+            }
+        }
+    }
+
     getPosition(position="center") {
         /* 
         *  list of positions
         *
         * "center": return position of center of the shape
         * "firstPoint": return position of the first point
-        * "Qn": retrun point of the quadrant; eg) "Q1" -> top-right, "Q2" -> top-left...
+        * "Qn": retrun point of the quadrant for a suqare; eg) "Q1" -> top-right, "Q2" -> top-left...
         */
 
-        if (position === "center") { return {...this.position}; };
-        if (position === "firstPoint") { return this.getDistenceToCenter(); };
-        if (position.startsWith("Q")) { return 0; };
+        if (position === "center") { return {...this.position}; }
+        if (position === "firstPoint") { return this.getDistenceToCenter(); }
+        if (position.startsWith("Q")) { return 0; }
     }
 
     getPoints(getFor=this.sides) {
