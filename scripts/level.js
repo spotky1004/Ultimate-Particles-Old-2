@@ -31,6 +31,7 @@ function levelLoader(filePath="") {
     .catch(e => console.log(new Error(e)));
 }
 
+/** @type {Level} */
 let levelPlaying = new Level();
 
 levelLoader("./levels/example.json");

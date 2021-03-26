@@ -5,7 +5,7 @@ let canvas = document.getElementById("canvas");
 /** @type {CanvasRenderingContext2D} */
 let c = canvas.getContext('2d');
 let canvasShape = new Particle({
-    size: {x: 0.8, y: 0.4},
+    size: 100,
     color: "#f5c542"
 });
 
@@ -13,8 +13,8 @@ let canvasShape = new Particle({
 function updateCanvas() {
     // set canvasFrame size
     canvasFrame.style.setProperty("--sizeMultiply", canvasShape.sizeMultiply);
-    canvasFrame.style.setProperty("--sizeMultiplyX", canvasShape.size.x);
-    canvasFrame.style.setProperty("--sizeMultiplyY", canvasShape.size.y);
+    canvasFrame.style.setProperty("--sizeMultiplyX", canvasShape.size.x/100);
+    canvasFrame.style.setProperty("--sizeMultiplyY", canvasShape.size.y/100);
 
     // fill background
     c.fillStyle = canvasShape.color;
