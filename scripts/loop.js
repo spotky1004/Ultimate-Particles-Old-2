@@ -1,6 +1,6 @@
 "use strict";
 
-let tickSpeed = 15, tickSpent = 0, mainInterval, canvasUpdater;
+let tickSpeed = 15, tickSpent = 0, mainInterval, canvasUpdater, editorUpdater;
 
 function loop() {
     levelPlaying.update();
@@ -12,4 +12,5 @@ function startMainInterval() {
 }
 
 canvasUpdater = setInterval(updateCanvas, 15);
+editorUpdater = setInterval(updateEditor, 15);
 //startMainInterval();

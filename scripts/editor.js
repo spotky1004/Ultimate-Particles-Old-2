@@ -1,27 +1,12 @@
 editorTab = 0; editorTabsub = 0; editingEvent = 0; editingAction = 0;
 actionPage = 1;
+inEditor = false;
 var eventList = []
 new Vue({
     el: "#editor",
 })
-
-function goEditorSelect() {
-    levelInit();
-    screenState = 'editor_select';
-    playing = 0;
-    screenSettings.size = 1;
-    particles['player'] = new Particle({'type': 'player', 'color': '#f00', 'position': [0, 0], 'outOfBounds': [[-1e308, 1e308], [-1e308, 1e308]], 'effects': ['glow']}); //base10 -> base36?
-    levelSelected = -1;
-    innerPlaying = 0;
-}
 function goEditor() {
-    levelInit();
-    screenState = 'editor';
-    playing = 0;
-    screenSettings.size = 1;
-    particles['player'] = new Particle({'type': 'player', 'color': '#f00', 'position': [0, 0], 'outOfBounds': [[-1e308, 1e308], [-1e308, 1e308]], 'effects': ['glow']}); //base10 -> base36?
-    levelSelected = -1;
-    innerPlaying = 0;
+    inEditor = true;
 }
 function goEditorTab(num) {
     var numOld = editorTabsub
@@ -70,9 +55,10 @@ function goEditorTab(num) {
     } else return;
 }
 function updateEditor() {
-    document.querySelector('#editor').style.display = screenState == 'editor' ? 'block' : 'none'
-    document.querySelector('#canvas').style.display = screenState == 'editor' ? 'none' : 'block'
-    document.querySelector('#canvasBorder').style.display = screenState == 'editor' ? 'none' : 'block'
+    document.querySelector('#editor').style.display = inEditor ? 'block' : 'none'
+    document.querySelector('#tabNav').style.display = inEditor ? 'block' : 'none'
+    document.querySelector('#canvas').style.display = inEditor ? 'none' : 'block'
+    document.querySelector('#canvasFrame').style.display = inEditor ? 'none' : 'block'
     document.querySelectorAll('.tab').forEach((node) => node.style.display = 'none')
     document.querySelector(`.tab:nth-child(${editorTabsub+1})`).style.display = 'block'
     document.querySelectorAll(`.tabSelect`).forEach((node) => node.classList.remove('active'))
