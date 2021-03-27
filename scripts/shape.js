@@ -15,7 +15,10 @@ class Shape {
         };
 
         // property fix
-        if (typeof this.size === "number") { this.size = {x: this.size, y: this.size}; }
+        if (typeof this.size === "number") {
+            const temp = this.size;
+            this.size = {x: temp, y: temp};
+        }
     }
 
     size = {x: 0.02, y: 0.02};

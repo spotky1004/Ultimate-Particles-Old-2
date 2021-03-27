@@ -3,13 +3,8 @@
 let tickSpeed = 15, tickSpent = 0, mainInterval, canvasUpdater;
 
 function loop() {
-    updateAll();
-    updateCanvas();
+    levelPlaying.update();
     tickSpent++;
-}
-
-function updateAll() {
-    
 }
 
 function startMainInterval() {
@@ -17,4 +12,4 @@ function startMainInterval() {
 }
 
 canvasUpdater = setInterval(updateCanvas, 15);
-startMainInterval();
+//startMainInterval();

@@ -24,6 +24,24 @@ class Particle extends Shape {
 
     particleUpdate(dt) {
         this.update(dt);
+
+        return this;
+    }
+
+    draw(canvas, offset, scale) {
+        const points = this.getPoints();
+        canvas.strokeStyle = this.color;
+        canvas.fillStyle = this.color;
+        canvas.lineWidth = 0;
+        canvas.beginPath();
+        canvas.moveTo((points[0].x+offset.x)*scale, (points[0].y+offset.y)*scale);
+        for (let i = 1, l = points.length; i < l; i++) {
+            canvas.lineTo((points[i].x+offset.x)*scale, (points[i].y+offset.y)*scale);
+        }
+        canvas.closePath();
+        canvas.fill();
+
+        return this;
     }
 }
 

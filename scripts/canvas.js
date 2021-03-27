@@ -8,6 +8,9 @@ let canvasShape = new Particle({
     size: 100,
     color: "#f5c542"
 });
+let canvasSettings = {
+    scale: 1
+};
 
 
 function updateCanvas() {

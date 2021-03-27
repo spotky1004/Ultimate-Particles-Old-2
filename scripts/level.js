@@ -22,12 +22,17 @@ class Level {
         
         this.config = level.config ?? {};
 
-        this.particles = {};
+        this.particles = level.particles ?? {};
+        for (const name in this.particles) this.particles[name] = new Particle(this.particles[name], name);
         this.tags = {};
     }
 
     update() {
-        this.particles
+        for (const name in this.particles) {
+            const particle = this.particles[name];
+            particle.update();
+            particle.draw(c, {...canvasShape.position}, canvasSettings.scale);
+        }
     }
 }
 
