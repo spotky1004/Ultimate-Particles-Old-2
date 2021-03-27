@@ -8,7 +8,7 @@ class Level {
     }
 
     resetLevel() {
-        const level = this.rawLevel;
+        const level = Spl.copyObj(this.rawLevel);
 
         this.actions = level.actions ?? {};
         
@@ -21,6 +21,13 @@ class Level {
         this.values.tickSpent = 0;
         
         this.config = level.config ?? {};
+
+        this.particles = {};
+        this.tags = {};
+    }
+
+    update() {
+        this.particles
     }
 }
 

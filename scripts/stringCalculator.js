@@ -129,5 +129,3 @@ class StringCalculator {
         return exReplacer;
     }
 }
-
-console.log(new StringCalculator("$r*$s*(2+8)").calculate());
