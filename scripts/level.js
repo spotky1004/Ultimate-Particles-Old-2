@@ -24,14 +24,16 @@ class Level {
 
         this.particles = level.particles ?? {};
         for (const name in this.particles) this.particles[name] = new Particle(this.particles[name], name);
-        this.tags = {};
+
+        this.caches = {};
+        this.caches.tags = {};
+        this.caches.types = {};
     }
 
     update() {
         for (const name in this.particles) {
             const particle = this.particles[name];
-            particle.update();
-            particle.draw(c, {...canvasShape.position}, canvasSettings.scale);
+            particle.update(levelPlaying.config.tickSpeed);
         }
     }
 }

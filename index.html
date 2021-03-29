@@ -1,186 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="./index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
-    <script src="./jQuery.js"></script>
-    <script src="./jquery.nice-select.js"></script>
-    <link href="./nice-select.css" rel="stylesheet">
+  <link rel="stylesheet" href="./index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+  <script src="./jQuery.js"></script>
+  <script src="./jquery.nice-select.js"></script>
+  <link href="./nice-select.css" rel="stylesheet">
 
-    <!-- Vue -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script> 
-    
-    <!-- function -->
-    <script src="./scripts/functions/calculate.js"></script>
-    <script src="./scripts/spotkyLib.js"></script>
+  <!-- Vue -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
 
-    <!-- class -->
-    <script src="./scripts/stringCalculator.js"></script>
-    <script src="./scripts/shape.js"></script>
-    <script src="./scripts/particle.js"></script>
-    <script src="./scripts/level.js"></script>
-    <script src="./scripts/editor.js"></script>
+  <!-- function -->
+  <script src="./scripts/functions/calculate.js"></script>
+  <script src="./scripts/spotkyLib.js"></script>
 
-    <!-- DOM update -->
-    <script src="./scripts/canvas.js" defer></script>
+  <!-- class -->
+  <script src="./scripts/stringCalculator.js"></script>
+  <script src="./scripts/shape.js"></script>
+  <script src="./scripts/particle.js"></script>
+  <script src="./scripts/level.js"></script>
+  <script src="./scripts/editor.js"></script>
 
-    <!-- Game runner -->
-    <script src="./scripts/loop.js" defer></script>
+  <!-- DOM update -->
+  <script src="./scripts/canvas.js" defer></script>
 
-    <title>Ultimate Particles</title>
+  <!-- Game runner -->
+  <script src="./scripts/loop.js" defer></script>
+
+  <title>Ultimate Particles</title>
 </head>
+
 <body>
-    <div id="gameScreenWarp">
-        <div id="levelInfo">
-            Phase 0<br>Hp 0
-        </div>
-        <div id="canvasFrame">
-            <canvas id="canvas"></canvas>
-        </div>
+  <div id="gameScreenWarp">
+    <div id="levelInfo">
+      Phase 0<br>Hp 0
     </div>
-    <div id="otherWarp">
-        <div id="overlapBtn1">
-            Extra
-        </div>
+    <div id="canvasFrame">
+      <canvas id="canvas"></canvas>
+      <canvas id="tempCanvas" style="display: none;"></canvas>
     </div>
-    <div id="editor">
-        <div id="tabNav">
-          <button class="tabSelect" id="tabNav_global" onclick="goEditorTab(0)">global</button>
-          <button class="tabSelect" id="tabNav_event" onclick="goEditorTab(1)">event</button>
-          <button class="tabSelect" id="tabNav_setting" onclick="goEditorTab(2)">setting</button>
+  </div>
+  <div id="otherWarp">
+    <div id="overlapBtn1">
+      Extra
+    </div>
+  </div>
+  <div id="editor">
+    <div id="tabNav">
+      <button class="tabSelect" id="tabNav_global" onclick="goEditorTab(0)">global</button>
+      <button class="tabSelect" id="tabNav_event" onclick="goEditorTab(1)">event</button>
+      <button class="tabSelect" id="tabNav_setting" onclick="goEditorTab(2)">setting</button>
+    </div>
+    <div id="tabs">
+      <!-- Global -->
+      <div class="tab">
+        map name: <br><span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>unnamed</span>
+        <br><br>
+        map creator: <br><span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>creator</span>
+        <br><br>
+        difficulty (0-20): <br><span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>1</span>
+        <br><br>
+        <hr color="#222" width="95%"><br>
+        phase interval: <br><span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>100</span><span class="typeElement"
+          onclick="this.innerHTML = ChangeType.bind(this)(['tick','seconds'])">tick</span>
+        <br><br>
+        player hp: <br><span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>10</span>
+        <br><br>
+        player move speed: <br><span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>0.01</span>
+        <br><br>
+        player size: <br><span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>1</span>
+        <br><br>
+        player color: <br>#<span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>ff0000</span>
+        <br><br>
+        background text: <br><span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>welcome!</span>
+        <br><br>
+        text size: <br><span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>10</span>
+        <br><br>
+        text color: <br>#<span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>c49b29</span>
+        <br><br>
+        background color: <br>#<span class="globalAttribute" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>f5c542</span>
+      </div>
+      <!-- Event -->
+      <div class="tab">
+        <div id="smalltabNav">
+          <button id="addEvent" class="tabSmall" onclick="newEvent()">add</button>
+          <button id="delEvent" class="tabSmall" onclick="eventSelect(1)">delete</button>
+          <button id="dupeEvent" class="tabSmall" onclick="eventSelect(2)">duplicate</button>
         </div>
-        <div id="tabs">
-          <!-- Global -->
-          <div class="tab">
-            map name: <br><span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>unnamed</span>
-            <br><br>
-            map creator: <br><span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>creator</span>
-            <br><br>
-            difficulty (0-20): <br><span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>1</span>
-            <br><br><hr color="#222" width="95%"><br>
-            phase interval: <br><span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>100</span><span class="typeElement" onclick="this.innerHTML = ChangeType.bind(this)(['tick','seconds'])">tick</span>
-            <br><br>
-            player hp: <br><span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>10</span>
-            <br><br>
-            player move speed: <br><span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>0.01</span>
-            <br><br>
-            player size: <br><span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>1</span>
-            <br><br>
-            player color: <br>#<span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>ff0000</span>
-            <br><br>
-            background text: <br><span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>welcome!</span>
-            <br><br>
-            text size: <br><span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>10</span>
-            <br><br>
-            text color: <br>#<span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>c49b29</span>
-            <br><br>
-            background color: <br>#<span class="globalAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent>f5c542</span>
+        <div id="eventNav"></div>
+      </div>
+      <!-- Setting -->
+      <div class="tab">
+      </div>
+      <!-- Event/Action -->
+      <div class="tab">
+        <br><span style="font-size: 4vh; font-weight: bold; text-shadow: 0px 0px .8vw #444; color: #fff;">|
+          global</span>
+        <div id="eventGlobalWarp">
+          event id:<span class="globalAttribute" id="eventAttribute_Id" contenteditable="true" placeholder="0"
+            @keydown.enter.prevent></span>
+        </div>
+        <br><br><span style="font-size: 4vh; font-weight: bold; text-shadow: 0px 0px .8vw #444; color: #fff;">|
+          condition</span>
+        <div id="eventConditionWarp">
+          <div>start phase:<span class="globalAttribute" id="eventAttribute_Start" contenteditable="true"
+              placeholder="0" @keydown.enter.prevent></span>phase</div>
+          <div>end phase:<span class="globalAttribute" id="eventAttribute_End" contenteditable="true" placeholder="0"
+              @keydown.enter.prevent></span>phase</div>
+          <div>interval:<span class="globalAttribute" id="eventAttribute_Interval" contenteditable="true"
+              placeholder="0" @keydown.enter.prevent></span>phase</div>
+        </div>
+        <br><br><span style="font-size: 4vh; font-weight: bold; text-shadow: 0px 0px .8vw #444; color: #fff;">|
+          action</span>
+        <div id="eventActionWarp">
+          <span class="eventActions" id="actionAdd" onclick="addAction()"><img src="resource/addAction.png" width="40"
+              height="40" style="padding: 0.5vw;">add action</span>
+        </div>
+        <div id="actionPageWarp">
+          <div id="actionPageInnerWarp">
+
           </div>
-          <!-- Event -->
-          <div class="tab">
-            <div id="smalltabNav">
-              <button id="addEvent" class="tabSmall" onclick="newEvent()">add</button>
-              <button id="delEvent" class="tabSmall" onclick="eventSelect(1)">delete</button>
-              <button id="dupeEvent" class="tabSmall" onclick="eventSelect(2)">duplicate</button>
-            </div>
-            <div id="eventNav"></div>
-          </div>
-          <!-- Setting -->
-          <div class="tab">
-          </div>
-          <!-- Event/Action -->
-          <div class="tab">
-            <br><span style="font-size: 4vh; font-weight: bold; text-shadow: 0px 0px .8vw #444; color: #fff;">| global</span>
-            <div id="eventGlobalWarp">
-              event id:<span class="globalAttribute" id="eventAttribute_Id" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
-            </div>
-            <br><br><span style="font-size: 4vh; font-weight: bold; text-shadow: 0px 0px .8vw #444; color: #fff;">| condition</span>
-            <div id="eventConditionWarp">
-              <div>start phase:<span class="globalAttribute" id="eventAttribute_Start" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>phase</div>
-              <div>end phase:<span class="globalAttribute" id="eventAttribute_End" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>phase</div>
-              <div>interval:<span class="globalAttribute" id="eventAttribute_Interval" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>phase</div>
-            </div>
-            <br><br><span style="font-size: 4vh; font-weight: bold; text-shadow: 0px 0px .8vw #444; color: #fff;">| action</span>
-            <div id="eventActionWarp">
-              <span class="eventActions" id="actionAdd" onclick="addAction()"><img src="resource/addAction.png" width="40" height="40" style="padding: 0.5vw;">add action</span>
-            </div>
-            <div id="actionPageWarp">
-              <div id="actionPageInnerWarp">
-  
-              </div>
-            </div>
-  
-          </div>
-          <!-- Event/Action/Attr -->
-          <div class="tab">
-            action id:<span class="actionAttribute" id="actionAttribute_Id" contenteditable="true" placeholder="0" @keydown.enter.prevent>action_1</span>
+        </div>
+
+      </div>
+      <!-- Event/Action/Attr -->
+      <div class="tab">
+        action id:<span class="actionAttribute" id="actionAttribute_Id" contenteditable="true" placeholder="0"
+          @keydown.enter.prevent>action_1</span>
+        <br><br>
+        action type:
+        <select id="actionType" name="action">
+          <option value="summon_particle">summon particle</option>
+          <option value="edit_particle">edit particle</option>
+          <option value="trace_particle">trace particle</option>
+          <option value="delete_particle">delete particle</option>
+          <option value="edit_level_setting">edit level setting</option>
+          <option value="edit_screen_setting">edit screen setting</option>
+          <option value="run_js_code">run js code</option>
+        </select>
+        <br><br>
+        <hr color="#222" width="95%"><br>
+        <div id="typeActionWarp">
+          <div id="summon_particleWarp">
+            tags:<span class="actionTypeAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
+            <br><span style="font-size: 1.2vh; color: #444;">separate tags with spaces</span>
             <br><br>
-            action type:
-            <select id="actionType" name="action">
-              <option value="summon_particle">summon particle</option>
-              <option value="edit_particle">edit particle</option>
-              <option value="trace_particle">trace particle</option>
-              <option value="delete_particle">delete particle</option>
-              <option value="edit_level_setting">edit level setting</option>
-              <option value="edit_screen_setting">edit screen setting</option>
-              <option value="run_js_code">run js code</option>
-            </select>
-            <br><br><hr color="#222" width="95%"><br>
-            <div id="typeActionWarp">
-              <div id="summon_particleWarp">
-                tags:<span class="actionTypeAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
-                <br><span style="font-size: 1.2vh; color: #444;">separate tags with spaces</span>
-                <br><br>
-                attribute:
-                <div class="attrsWarp">
-                  <select class="attrsType" name="action">
-                    <option value="type">type</option>
-                    <option value="rotatedeg">rotate</option>
-                    <option value="deg">move deg</option>
-                    <option value="position">position</option>
-                    <option value="speed">move speed</option>
-                    <option value="absSize">size mult</option>
-                    <option value="size">size</option>
-                  </select>:
-                  <span class="attrsAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
-                </div>
-              </div>
-              <div id="edit_particleWarp">
-                selector:<span class="actionTypeAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
-                <br><span style="font-size: 1.2vh; color: #444;">separate selectors with spaces</span>
-                <br><br>
-                <div class="attrsWarp"></div>
-              </div>
-              <div id="trace_particleWarp">
-                selector:<span class="actionTypeAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
-                <br><br>
-                selector (target):<span class="actionTypeAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
-                <br><span style="font-size: 1.2vh; color: #444;">separate selectors with spaces</span>
-                <br><br>
-              </div>
-              <div id="delete_particleWarp">
-                selector:<span class="actionTypeAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
-                <br><span style="font-size: 1.2vh; color: #444;">separate selectors with spaces</span>
-                <br><br>
-              </div>
-              <div id="edit_level_settingWarp">
-                settings:<span class="actionTypeAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
-                <br><br>
-              </div>
-              <div id="edit_screen_settingWarp">
-                settings:<span class="actionTypeAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
-                <br><br>
-              </div>
-              <div id="run_js_codeWarp">
-                code:<span class="actionTypeAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
-                <br><br>
-              </div>
+            attribute:
+            <div class="attrsWarp">
+              <select class="attrsType" name="action">
+                <option value="type">type</option>
+                <option value="rotatedeg">rotate</option>
+                <option value="deg">move deg</option>
+                <option value="position">position</option>
+                <option value="speed">move speed</option>
+                <option value="absSize">size mult</option>
+                <option value="size">size</option>
+              </select>:
+              <span class="attrsAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
             </div>
+          </div>
+          <div id="edit_particleWarp">
+            selector:<span class="actionTypeAttribute" contenteditable="true" placeholder="0"
+              @keydown.enter.prevent></span>
+            <br><span style="font-size: 1.2vh; color: #444;">separate selectors with spaces</span>
+            <br><br>
+            <div class="attrsWarp"></div>
+          </div>
+          <div id="trace_particleWarp">
+            selector:<span class="actionTypeAttribute" contenteditable="true" placeholder="0"
+              @keydown.enter.prevent></span>
+            <br><br>
+            selector (target):<span class="actionTypeAttribute" contenteditable="true" placeholder="0"
+              @keydown.enter.prevent></span>
+            <br><span style="font-size: 1.2vh; color: #444;">separate selectors with spaces</span>
+            <br><br>
+          </div>
+          <div id="delete_particleWarp">
+            selector:<span class="actionTypeAttribute" contenteditable="true" placeholder="0"
+              @keydown.enter.prevent></span>
+            <br><span style="font-size: 1.2vh; color: #444;">separate selectors with spaces</span>
+            <br><br>
+          </div>
+          <div id="edit_level_settingWarp">
+            settings:<span class="actionTypeAttribute" contenteditable="true" placeholder="0"
+              @keydown.enter.prevent></span>
+            <br><br>
+          </div>
+          <div id="edit_screen_settingWarp">
+            settings:<span class="actionTypeAttribute" contenteditable="true" placeholder="0"
+              @keydown.enter.prevent></span>
+            <br><br>
+          </div>
+          <div id="run_js_codeWarp">
+            code:<span class="actionTypeAttribute" contenteditable="true" placeholder="0" @keydown.enter.prevent></span>
+            <br><br>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 </body>
+
 </html>

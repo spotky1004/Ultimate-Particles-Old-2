@@ -1,12 +1,22 @@
 {
     "actions": {
         "exampleAction": {
-            "condition": ["phase", "eq", "1"],
-            "deleteIf": ["phase", "gte", "5"]
+            
         }
     },
     "particles": {
-        "player": {"size": 4, "behave": "player", "color": "#000"}
+        "player20": {"size": 50, "behave": "player", "color": "#f00", "sides": 4, "rotate":   0},
+        "player21": {"size": 50, "behave": "player", "color": "#fff", "sides": 4, "rotate":  90},
+        "player22": {"size": 50, "behave": "player", "color": "#f00", "sides": 4, "rotate": 180},
+        "player23": {"size": 50, "behave": "player", "color": "#fff", "sides": 4, "rotate": 270},
+        "p0": {"size": 15, "behave": "player", "color": "#fcc", "sides": 8, "rotate":   0},
+        "p1": {"size": 15, "behave": "player", "color": "#ffc", "sides": 8, "rotate":  45},
+        "p2": {"size": 15, "behave": "player", "color": "#cfc", "sides": 8, "rotate":  90},
+        "p3": {"size": 15, "behave": "player", "color": "#cff", "sides": 8, "rotate": 135},
+        "p4": {"size": 15, "behave": "player", "color": "#ccf", "sides": 8, "rotate": 180},
+        "p5": {"size": 15, "behave": "player", "color": "#fcf", "sides": 8, "rotate": 225},
+        "p6": {"size": 15, "behave": "player", "color": "#fcf", "sides": 8, "rotate": 260},
+        "p7": {"size": 15, "behave": "player", "color": "#fcf", "sides": 8, "rotate": 305}
     },
     "values": {
         "levelInfo": "Phase ${this.values.phase}<br>HP ${this.values.playerHp}",
