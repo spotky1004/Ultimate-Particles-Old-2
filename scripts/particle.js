@@ -41,13 +41,13 @@ class Particle extends Shape {
 
         canvas.beginPath();
         canvas.moveTo(
-            Math.round((points[0].x+offset.x)*scale),
-            Math.round((points[0].y+offset.y)*scale)
+            Math.round((points[0].x+offset.x)*scale-super.getCentroid().x),
+            Math.round((points[0].y+offset.y)*scale-super.getCentroid().y)
         );
         for (let i = 1, l = points.length; i < l; i++) {
             canvas.lineTo(
-                Math.round((points[i].x+offset.x)*scale),
-                Math.round((points[i].y+offset.y)*scale)
+                Math.round((points[i].x+offset.x)*scale-super.getCentroid().x),
+                Math.round((points[i].y+offset.y)*scale-super.getCentroid().y)
             );
         }
         canvas.closePath();

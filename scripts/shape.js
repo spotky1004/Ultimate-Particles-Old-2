@@ -55,15 +55,17 @@ class Shape {
 
         if (position === "center") return {...this.position};
         if (position === "firstPoint") return {
-            x: this.getDistenceToCenter().x+this.position.x,
-            y: this.getDistenceToCenter().y+this.position.y,
+            x: this.position.x-this.getCentroid().x,
+            y: this.position.y-this.getCentroid().y,
         };
-        if (position.startsWith("Q")) return 0;
+        if (position.startsWith("Q")) return 0; // 
     }
 
     getPoints(getFor=this.sides) {
+        // ㅁㄴㅇㅇㄻㄴㄻㄴㅇㄹㄴㅇㄻㄴㅇㄹㄴㅇㄻㄴㅇ
+        /** @type {Shape} */
         let points = [];
-        let tempPosition = this.getPosition("firstPoint");
+        let tempPosition = {...this.position}
 
         // var d1 = (-d + 180 / s) % 360;
         // var sScale = 1/(particles[name].sides/2*Math.cos(Math.rad((180-(180/particles[name].sides*(particles[name].sides-2)))/2)))/0.7071067811865475*(particles[name].sides==3?0.7071067811865475:1);
@@ -97,18 +99,32 @@ class Shape {
 
         return points;
     }
+    getArea() {
+        var c = 0
+        var points = this.getPoints()
+        for (var i=0; i<points.length-1; i++) {
+            var tempPosition = points[i]
+            var tempNextPosition = points[i+1]
+            c += ((tempPosition.x*tempNextPosition.y)-(tempNextPosition.x*tempPosition.y))/2
+        }
+        c += ((points[points.length-1].x*points[0].y)-(points[0].x*points[points.length-1].y))/2
+        return c
+    }
     getCentroid() {
         var c = {
             x: 0,
             y: 0
         }
         var points = this.getPoints()
-        for (var i in points) {
-            tempPosition = points[i]
-            tempNextPosition = points[i+1]
-            c[x] += (tempPosition.x*tempNextPosition.x)*(tempPosition.x*tempNextPosition.y-tempNextPosition.x*tempPosition.y)
-            c[y] += (tempPosition.y*tempNextPosition.y)*(tempPosition.x*tempNextPosition.y-tempNextPosition.x*tempPosition.y)
+        for (var i=0; i<points.length-1; i++) {
+            var tempPosition = points[i]
+            var tempNextPosition = points[i+1]
+            c.y += (tempPosition.y+tempNextPosition.y)*((tempPosition.x*tempNextPosition.y)-(tempNextPosition.x*tempPosition.y))/6/this.getArea()
+            c.x += (tempPosition.x+tempNextPosition.x)*((tempPosition.x*tempNextPosition.y)-(tempNextPosition.x*tempPosition.y))/6/this.getArea()
         }
+        c.x += (points[points.length-1].x+points[0].x)*((points[points.length-1].x*points[0].y)-(points[0].x*points[points.length-1].y))/6/this.getArea()
+        c.y += (points[points.length-1].y+points[0].y)*((points[points.length-1].x*points[0].y)-(points[0].x*points[points.length-1].y))/6/this.getArea()
+        return c
     }
 
     getSizeCoefficient() {
