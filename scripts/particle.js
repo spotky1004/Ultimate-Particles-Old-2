@@ -33,21 +33,28 @@ class Particle extends Shape {
         return this;
     }
 
+    getDebugInfo(debugList=[]) {
+      if (debugList.includes('coordinate')) {
+        console.log(`Draw Position: ${Math.roundAt(super.getPoints()[0].x*2-super.getCentroid().x, 3)}`)
+        console.log(`Center: ${Math.roundAt(super.getCentroid().x, 3)}`)
+      }
+    }
+
     draw(canvas, offset, scale) {
-        const points = this.getPoints();
+        const points = super.getPoints();
         canvas.strokeStyle = this.color;
         canvas.fillStyle = this.color;
         canvas.lineWidth = 0;
 
         canvas.beginPath();
         canvas.moveTo(
-            Math.round((points[0].x+offset.x)*scale-super.getCentroid().x),
-            Math.round((points[0].y+offset.y)*scale-super.getCentroid().y)
+            Math.round((points[0].x*2+offset.x)*scale-super.getCentroid().x*scale),
+            Math.round((points[0].y*2+offset.y)*scale-super.getCentroid().y*scale)
         );
-        for (let i = 1, l = points.length; i < l; i++) {
+        for (var i = 1, l = points.length; i < l; i++) {
             canvas.lineTo(
-                Math.round((points[i].x+offset.x)*scale-super.getCentroid().x),
-                Math.round((points[i].y+offset.y)*scale-super.getCentroid().y)
+                Math.round((points[i].x*2+offset.x-super.getCentroid().x)*scale),
+                Math.round((points[i].y*2+offset.y-super.getCentroid().y)*scale)
             );
         }
         canvas.closePath();

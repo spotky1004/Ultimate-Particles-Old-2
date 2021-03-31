@@ -5,10 +5,10 @@
         }
     },
     "particles": {
-        "player20": {"size": 50, "behave": "player", "color": "#f00", "sides": 4, "rotate":   0},
-        "player21": {"size": 50, "behave": "player", "color": "#fff", "sides": 4, "rotate":  90},
-        "player22": {"size": 50, "behave": "player", "color": "#f00", "sides": 4, "rotate": 180},
-        "player23": {"size": 50, "behave": "player", "color": "#fff", "sides": 4, "rotate": 270}
+        "player20": {"size": 25, "position": {"x": -25, "y": -25}, "behave": "player", "color": "#fff", "sides": 4, "rotate":   0},
+        "player21": {"size": 25, "position": {"x": -25, "y":  25}, "behave": "player", "color": "#f00", "sides": 4, "rotate":  0},
+        "player22": {"size": 25, "position": {"x":  25, "y": -25}, "behave": "player", "color": "#f00", "sides": 4, "rotate": 0},
+        "player23": {"size": 25, "position": {"x":  25, "y":  25}, "behave": "player", "color": "#fff", "sides": 4, "rotate": 0}
     },
     "values": {
         "levelInfo": "Phase ${this.values.phase}<br>HP ${this.values.playerHp}",

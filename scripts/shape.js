@@ -60,15 +60,49 @@ class Shape {
         };
         if (position.startsWith("Q")) return 0; // 
     }
+    getPointsNew(getFor=this.sides) {
+        // ㅁㄴㅇㅇㄻㄴㄻㄴㅇㄹㄴㅇㄻㄴㅇㄹㄴㅇㄻㄴㅇ
+        /** @type {Shape} */
+        var points = [{x: 0, y: -1}];
 
+        var sScale = 2*Math.sin(toRadian(180/getFor))
+        
+        // Point Calc
+        for (var i = 1; i < getFor; i++) {
+            var tmpPoint = {}
+            tmpPoint.x = points[points.length-1].x
+            tmpPoint.y = points[points.length-1].y
+
+            var rotateDeg = (90*(getFor-2)/getFor) + (i-1)*(360-360/getFor)
+            tmpPoint.x += Math.sin(toRadian(rotateDeg))*sScale
+            tmpPoint.y += Math.cos(toRadian(rotateDeg))*sScale
+            console.log(tmpPoint)
+            points.push(tmpPoint)
+        }
+        // Rotate Calc 1
+        for (var i = 0; i < getFor; i++) {
+            var tmpPoint = {}
+            tmpPoint.x = points[i].x
+            tmpPoint.y = points[i].y
+
+            var rotateDeg = (90*(getFor-2)/getFor) + (i-1)*(360-360/getFor)
+            tmpPoint = {x: tmpPoint.x*Math.cos(this.getRadOf(this.rotate+180/this.sides))-tmpPoint.y*Math.sin(this.getRadOf(this.rotate+180/this.sides)),
+                        y: tmpPoint.x*Math.sin(this.getRadOf(this.rotate+180/this.sides))+tmpPoint.y*Math.cos(this.getRadOf(this.rotate+180/this.sides))}
+            console.log(tmpPoint)
+            points[i] = tmpPoint
+        }
+
+        
+        return points;
+    }
     getPoints(getFor=this.sides) {
         // ㅁㄴㅇㅇㄻㄴㄻㄴㅇㄹㄴㅇㄻㄴㅇㄹㄴㅇㄻㄴㅇ
         /** @type {Shape} */
         let points = [];
         let tempPosition = {...this.position}
 
+        var sScale = 1/(getFor/2*Math.cos(Math.rad((180-(180/getFor*(getFor-2)))/2)))/0.7071067811865475*(getFor==3?0.7071067811865475:1);
         // var d1 = (-d + 180 / s) % 360;
-        // var sScale = 1/(particles[name].sides/2*Math.cos(Math.rad((180-(180/particles[name].sides*(particles[name].sides-2)))/2)))/0.7071067811865475*(particles[name].sides==3?0.7071067811865475:1);
         // var centerL = Math.csc(Math.rad(180 / s)) / 2 * particles[name].absSize*sScale;
         // var lastPos = [
         //   maxLeng * (-(screenSettings.p[0]+(1-screenSettings.size)) / 2 * screenSettings.scale + 0.5 + p[0] / 2 * screenSettings.scale - Math.sin(Math.rad(d1)) * centerL * particles[name].size[0] * screenSettings.scale),
@@ -93,8 +127,8 @@ class Shape {
 
         for (let i = 0; i < getFor; i++) {
             points.push({...tempPosition});
-            tempPosition.x += Math.sin(i*(Math.PI*2/this.sides) + this.getRadOf(-this.rotate) + Math.PI / this.sides)*this.getSizeCoefficient()*this.getSize().x;
-            tempPosition.y += Math.cos(i*(Math.PI*2/this.sides) + this.getRadOf(-this.rotate) + Math.PI / this.sides)*this.getSizeCoefficient()*this.getSize().y;
+            tempPosition.x += Math.sin(i*(Math.PI*2/this.sides) + this.getRadOf(45-this.rotate) + Math.PI / this.sides)*this.getSizeCoefficient()*this.getSize().x;
+            tempPosition.y += Math.cos(i*(Math.PI*2/this.sides) + this.getRadOf(45-this.rotate) + Math.PI / this.sides)*this.getSizeCoefficient()*this.getSize().y;
         }
 
         return points;
