@@ -41,20 +41,20 @@ class Particle extends Shape {
     }
 
     draw(canvas, offset, scale) {
-        const points = super.getPoints();
+        const points = super.getPointsNew();
         canvas.strokeStyle = this.color;
         canvas.fillStyle = this.color;
         canvas.lineWidth = 0;
 
         canvas.beginPath();
         canvas.moveTo(
-            Math.round((points[0].x*2+offset.x)*scale-super.getCentroid().x*scale),
-            Math.round((points[0].y*2+offset.y)*scale-super.getCentroid().y*scale)
+            Math.round((super.getPointsNew()[0].x+offset.x)*scale),
+            Math.round((super.getPointsNew()[0].y+offset.y)*scale)
         );
         for (var i = 1, l = points.length; i < l; i++) {
             canvas.lineTo(
-                Math.round((points[i].x*2+offset.x-super.getCentroid().x)*scale),
-                Math.round((points[i].y*2+offset.y-super.getCentroid().y)*scale)
+                Math.round((super.getPointsNew()[i].x+offset.x)*scale),
+                Math.round((super.getPointsNew()[i].y+offset.y)*scale)
             );
         }
         canvas.closePath();

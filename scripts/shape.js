@@ -76,19 +76,42 @@ class Shape {
             var rotateDeg = (90*(getFor-2)/getFor) + (i-1)*(360-360/getFor)
             tmpPoint.x += Math.sin(toRadian(rotateDeg))*sScale
             tmpPoint.y += Math.cos(toRadian(rotateDeg))*sScale
-            console.log(tmpPoint)
             points.push(tmpPoint)
         }
-        // Rotate Calc 1
+        // Offset Rotate Calc
         for (var i = 0; i < getFor; i++) {
             var tmpPoint = {}
             tmpPoint.x = points[i].x
             tmpPoint.y = points[i].y
 
             var rotateDeg = (90*(getFor-2)/getFor) + (i-1)*(360-360/getFor)
-            tmpPoint = {x: tmpPoint.x*Math.cos(this.getRadOf(this.rotate+180/this.sides))-tmpPoint.y*Math.sin(this.getRadOf(this.rotate+180/this.sides)),
-                        y: tmpPoint.x*Math.sin(this.getRadOf(this.rotate+180/this.sides))+tmpPoint.y*Math.cos(this.getRadOf(this.rotate+180/this.sides))}
-            console.log(tmpPoint)
+            tmpPoint = {x: tmpPoint.x*Math.cos(this.getRadOf(180/this.sides))-tmpPoint.y*Math.sin(this.getRadOf(180/this.sides)),
+                        y: tmpPoint.x*Math.sin(this.getRadOf(180/this.sides))+tmpPoint.y*Math.cos(this.getRadOf(180/this.sides))}
+            points[i] = tmpPoint
+        }
+        // Size Calc
+        for (var i = 0; i < getFor; i++) {
+            var tmpPoint = {}
+            tmpPoint.x = points[i].x*this.getSize().x*Math.sqrt(2)
+            tmpPoint.y = points[i].y*this.getSize().y*Math.sqrt(2)
+            points[i] = tmpPoint
+        }
+        // Rotate Calc
+        for (var i = 0; i < getFor; i++) {
+            var tmpPoint = {}
+            tmpPoint.x = points[i].x
+            tmpPoint.y = points[i].y
+
+            var rotateDeg = (90*(getFor-2)/getFor) + (i-1)*(360-360/getFor)
+            tmpPoint = {x: tmpPoint.x*Math.cos(this.getRadOf(this.rotate))-tmpPoint.y*Math.sin(this.getRadOf(this.rotate)),
+                        y: tmpPoint.x*Math.sin(this.getRadOf(this.rotate))+tmpPoint.y*Math.cos(this.getRadOf(this.rotate))}
+            points[i] = tmpPoint
+        }
+        // Position Calc
+        for (var i = 0; i < getFor; i++) {
+            var tmpPoint = {}
+            tmpPoint.x = points[i].x+this.position.x
+            tmpPoint.y = points[i].y+this.position.y
             points[i] = tmpPoint
         }
 
