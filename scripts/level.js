@@ -22,12 +22,15 @@ class Level {
         
         this.config = level.config ?? {};
 
-        this.particles = level.particles ?? {};
-        for (const name in this.particles) this.particles[name] = new Particle(this.particles[name], name);
-
         this.caches = {};
         this.caches.tags = {};
         this.caches.types = {};
+        for (const type in particleTypeData) this.caches.types[type] = [];
+        this.caches.behaves = {};
+        for (const behave in particleBehaveData) this.caches.behaves[behave] = [];
+
+        this.particles = level.particles ?? {};
+        for (const name in level.particles) this.particles[name] = new Particle(this.particles[name], name);
     }
 
     update() {

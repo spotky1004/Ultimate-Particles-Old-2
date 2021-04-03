@@ -10,7 +10,7 @@ let tc = tempCanvas.getContext('2d');
 let canvasShape = new Particle({
     size: 100,
     color: "#f5c542"
-});
+}, "canvas", true);
 let canvasSettings = {
     scale: 1
 };

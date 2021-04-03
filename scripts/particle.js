@@ -1,28 +1,41 @@
 "use strict";
 
 class Particle extends Shape {
-    constructor(attrs={}, id) {
+    constructor(attrs={}, id, ignoreLevel=false) {
         super(attrs); // super! -> size, sizeMultiply, sides, position, rotate, degType & increments
+
 
         // important
         this.id = id ?? `particle${new Date().getTime()}`;
         this.type = attrs.type ?? "shape";
         this.behave = attrs.behave ?? "enemy";
 
+
         // view
         this.color = attrs.color ?? "#f00";
+
 
         // update
         this.speed = 0
 
+
         // player
         this.playerSpeed = 10
+
 
         // etc.
         this.tag = attrs.tag ?? [];
 
-        if (typeof levelPlaying.caches.types[this.type] == "undefined") levelPlaying.caches.types[this.type] = [];
-        levelPlaying.caches.types[this.type].push(id);
+
+        // set cache
+        if (!ignoreLevel) {
+          // types
+          levelPlaying.caches.types[this.type].push(id);
+
+          // behaves
+          levelPlaying.caches.behaves[this.behave].push(id);
+          console.log(levelPlaying.caches.behaves);
+        }
     }
     
     id = `particle${new Date().getTime()}`;
@@ -35,11 +48,25 @@ class Particle extends Shape {
 
     particleUpdate(dt) {
         super.update(dt);
-        if (this.behave == "player") {
-          if (keypress["w"] && !super.collisionWithWall(["top"])) this.position.y -= this.playerSpeed * dt / 300
-          if (keypress["a"] && !super.collisionWithWall(["left"])) this.position.x -= this.playerSpeed * dt / 300
-          if (keypress["s"] && !super.collisionWithWall(["bottom"])) this.position.y += this.playerSpeed * dt / 300
-          if (keypress["d"] && !super.collisionWithWall(["right"])) this.position.x += this.playerSpeed * dt / 300
+        if (this.behave === "player") {
+          // calculate modified player speed
+          let playerSpeed = this.playerSpeed;
+          // divide speed by sqrt(2) if both axis is pressed
+          let c1 = (keypress.w || keypress.s) && !(keypress.w && keypress.s); // nand
+          let c2 = (keypress.a || keypress.d) && !(keypress.a && keypress.d);
+          if (c1 && c2) playerSpeed /= Math.sqrt(2);
+
+          // move
+          if (keypress.w) this.position.y -= playerSpeed * dt / 300;
+          if (keypress.a) this.position.x -= playerSpeed * dt / 300;
+          if (keypress.s) this.position.y += playerSpeed * dt / 300;
+          if (keypress.d) this.position.x += playerSpeed * dt / 300;
+
+          // wall collision
+          for (let i = 0, l = levelPlaying.caches.behaves.wall; i < l; i++) {
+            const wallParticle = levelPlaying.particles[levelPlaying.caches.behaves.wall[i]];
+
+          }
         }
         return this;
     }
@@ -72,8 +99,11 @@ class Particle extends Shape {
         canvas.fill();
     }
 
-    changeType(type="") {
-        levelPlaying.caches.types[this.type].push(id);
+    changeBehave(type="") {
+      // unfinished, don't change plarticle's type!
+      return this;
+
+      levelPlaying.caches.behaves[this.type].push(id);
     }
 
     addTag(name="") {
@@ -108,6 +138,13 @@ const particleTypeData = {
     linearGradient: {drawPoint: "firstPoint"},
     radialGradient: {drawPoint: "center"}
 };
+
+const particleBehaveData = {
+  player: 0,
+  enemy: 1,
+  decoration: 2,
+  wall: 3,
+}
 /*
 var d1 = (-d + 180 / s) % 360;
           var sScale = 1/(particles[name].sides/2*Math.cos(Math.rad((180-(180/particles[name].sides*(particles[name].sides-2)))/2)))/0.7071067811865475*(particles[name].sides==3?0.7071067811865475:1);
