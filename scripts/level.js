@@ -33,7 +33,7 @@ class Level {
     update() {
         for (const name in this.particles) {
             const particle = this.particles[name];
-            particle.update(levelPlaying.config.tickSpeed);
+            particle.particleUpdate(levelPlaying.config.tickSpeed);
         }
     }
 }

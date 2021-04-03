@@ -5,15 +5,17 @@
         }
     },
     "particles": {
-        "player20": {"size": 25, "position": {"x": -25, "y": -25}, "behave": "player", "color": "#fff", "sides": 4, "rotate":  0},
-        "player21": {"size": 25, "position": {"x": -25, "y":  25}, "behave": "player", "color": "#f00", "sides": 4, "rotate":  0},
-        "player22": {"size": 25, "position": {"x":  25, "y": -25}, "behave": "player", "color": "#f00", "sides": 4, "rotate":  0},
-        "player23": {"size": 25, "position": {"x":  25, "y":  25}, "behave": "player", "color": "#fff", "sides": 4, "rotate":  0},
+        "player20": {"size": 25, "position": {"x": -25, "y": -25}, "behave": "decoration", "color": "#fff", "sides": 4, "rotate":  0},
+        "player21": {"size": 25, "position": {"x": -25, "y":  25}, "behave": "decoration", "color": "#f00", "sides": 4, "rotate":  0},
+        "player22": {"size": 25, "position": {"x":  25, "y": -25}, "behave": "decoration", "color": "#f00", "sides": 4, "rotate":  0},
+        "player23": {"size": 25, "position": {"x":  25, "y":  25}, "behave": "decoration", "color": "#fff", "sides": 4, "rotate":  0},
 
-        "polygon5": {"size": 15, "position": {"x":  25, "y":  25}, "behave": "player", "color": "#0f0", "sides": 5, "rotate":  0},
-        "polygon6": {"size": 15, "position": {"x":  -25, "y":  25}, "behave": "player", "color": "#0f0", "sides": 6, "rotate":  0},
-        "polygon7": {"size": 15, "position": {"x":  -25, "y":  -25}, "behave": "player", "color": "#0f0", "sides": 7, "rotate":  0},
-        "polygon5_2": {"size": 15, "position": {"x":  25, "y":  -25}, "behave": "player", "color": "#0f0", "sides": 5, "rotate":  180}
+        "polygon5": {"size": 15, "position": {"x":  25, "y":  25}, "behave": "decoration", "color": "#0f0", "sides": 5, "rotate":  0},
+        "polygon6": {"size": 15, "position": {"x":  -25, "y":  25}, "behave": "decoration", "color": "#0f0", "sides": 6, "rotate":  0},
+        "polygon7": {"size": 15, "position": {"x":  -25, "y":  -25}, "behave": "decoration", "color": "#0f0", "sides": 7, "rotate":  0},
+        "polygon5_2": {"size": 15, "position": {"x":  25, "y":  -25}, "behave": "decoration", "color": "#0f0", "sides": 5, "rotate":  180},
+
+        "player": {"size": 2, "behave": "player", "color": "#600", "sides": 4, "rotate":  0}
     },
     "values": {
         "levelInfo": "Phase ${this.values.phase}<br>HP ${this.values.playerHp}",

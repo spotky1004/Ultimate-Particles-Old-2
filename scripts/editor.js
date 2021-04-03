@@ -85,7 +85,7 @@ function checkValid(element, number) {
     var regex_hexCode = /^[0-9a-f]{8}$|^[0-9a-f]{6}$|^[0-9a-f]{4}$|^[0-9a-f]{3}$/
     var regex_text = /^.{0,20}$/
     var regex_Integer = /^-?[0-9]{1,4}$/
-    var regex_Diff = /^1?[0-9]$|^20$/
+    var regex_Diff = /^[0-8]$/
     var regexList = [regex_natrNum, regex_rNum, regex_hexCode, regex_text, regex_Integer, regex_Diff]
     var indexList = [/* Global Attr */ 3, 3, 5, globalTypes[0] == 'tick' ? 0 : 1, 0, 1, 1, 2, 3, 1, 2, 2, /* Event Attr */ 3, 0, 0, 0]
     

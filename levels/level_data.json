@@ -1,0 +1,20 @@
+[
+    {
+        "name": "welcome!",
+        "position": [0, 0],
+        "difficulty": 2,
+        "unlockCondition": {
+            "function": "true",
+            "display": "default"
+        }
+    },
+    {
+        "name": "boom!",
+        "position": [1, 0],
+        "difficulty": 3,
+        "unlockCondition": {
+            "function": "game.rank > 0.2",
+            "display": "0.20 Rank"
+        }
+    }
+]

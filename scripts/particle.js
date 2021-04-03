@@ -12,6 +12,12 @@ class Particle extends Shape {
         // view
         this.color = attrs.color ?? "#f00";
 
+        // update
+        this.speed = 0
+
+        // player
+        this.playerSpeed = 10
+
         // etc.
         this.tag = attrs.tag ?? [];
 
@@ -28,8 +34,13 @@ class Particle extends Shape {
     tag = [];
 
     particleUpdate(dt) {
-        this.update(dt);
-
+        super.update(dt);
+        if (this.behave == "player") {
+          if (keypress["w"] && !super.collisionWithWall(["top"])) this.position.y -= this.playerSpeed * dt / 300
+          if (keypress["a"] && !super.collisionWithWall(["left"])) this.position.x -= this.playerSpeed * dt / 300
+          if (keypress["s"] && !super.collisionWithWall(["bottom"])) this.position.y += this.playerSpeed * dt / 300
+          if (keypress["d"] && !super.collisionWithWall(["right"])) this.position.x += this.playerSpeed * dt / 300
+        }
         return this;
     }
 

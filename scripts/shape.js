@@ -85,8 +85,8 @@ class Shape {
             tmpPoint.y = points[i].y
 
             var rotateDeg = (90*(getFor-2)/getFor) + (i-1)*(360-360/getFor)
-            tmpPoint = {x: tmpPoint.x*Math.cos(this.getRadOf(180/this.sides))-tmpPoint.y*Math.sin(this.getRadOf(180/this.sides)),
-                        y: tmpPoint.x*Math.sin(this.getRadOf(180/this.sides))+tmpPoint.y*Math.cos(this.getRadOf(180/this.sides))}
+            tmpPoint = {x: tmpPoint.x*Math.cos(this.getRadOf(180+180/this.sides))-tmpPoint.y*Math.sin(this.getRadOf(180+180/this.sides)),
+                        y: tmpPoint.x*Math.sin(this.getRadOf(180+180/this.sides))+tmpPoint.y*Math.cos(this.getRadOf(180+180/this.sides))}
             points[i] = tmpPoint
         }
         // Size Calc
@@ -221,5 +221,31 @@ class Shape {
 
     getRadOf(deg) {
         return (this.degType === "rad" ? deg : Math.rad(deg));
+    }
+
+    collisionWith(particle) {
+        if ((this.sides == -1 && particle.sides != -1) || (this.sides != -1 && particle.sides == -1)) {
+          var point = (this.sides > particle.sides ? this : particle).getPointsNew();
+          var circle = (this.sides < particle.sides ? this : particle);
+          for (var i = 0, l = point.length; i < l; i++) {
+            if (Math.abs(Math.sqrt((point[i].x-circle.position[0])**2+(point[i].y-circle.position[1])**2)) < circle.size[0]*circle.sizeMultiply) return 1;
+          }
+        } else if (this.sides == 4 && particle.sides == 4 && particle.rotateDeg == 0 && this.rotateDeg == 0) {
+          if (
+            Math.abs(this.position[0]-particle.position[0]) < Math.abs(this.getSize()[0]+particle.getSize()[0]) &&
+            Math.abs(this.position[1]-particle.position[1]) < Math.abs(this.getSize()[1]+particle.getSize()[1])
+          ) {
+            return 1;
+          }
+        } else {
+          if (doPolygonsIntersect(particle.getPointsNew(), this.getPointsNew())) {
+            return 1;
+          }
+        }
+        return 0;
+    }
+
+    collisionWithWall(walls=["top", "left", "bottom", "right"]) {
+        return false
     }
 }
